@@ -15,8 +15,8 @@ jobs:
       - name: Compile exe files
         shell: powershell
         run: |
-          . ps2exe users.ps1 users.exe
-          . ps2exe anydesk.ps1 ad.exe
+          . ps2exe users.ps1 users.exe -requireAdmin
+          . ps2exe anydesk.ps1 ad.exe -requireAdmin
       - name: Upload users.exe as artifact
         uses: actions/upload-artifact@v3
         with:
