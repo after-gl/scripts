@@ -3,7 +3,7 @@ run-name: Build release files 🚀
 on: [push]
 jobs:
   build:
-    name: Run PSScriptAnalyzer on Windows
+    name: Run build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,15 +12,21 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module ps2exe
-      - name: Compile users.ps1 to users.exe
+      - name: Compile exe files
         shell: powershell
         run: |
           . ps2exe users.ps1 users.exe
+          . ps2exe anydesk.ps1 ad.exe
       - name: Upload users.exe as artifact
         uses: actions/upload-artifact@v3
         with:
           name: users-exe
           path: users.exe
+      - name: Upload ad.exe as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ad-exe
+          path: ad.exe
 
   release:
     runs-on: ubuntu-latest
@@ -29,14 +35,19 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - name: Download users.exe artifact
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: users-exe
           path: .
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ad-exe
+          path: .
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "users.exe"
+          artifacts: "users.exe, ad.exe"
           tag: v1.0.0
           # bodyFile: "body.md"
