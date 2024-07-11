@@ -1,6 +1,12 @@
 name: Prod build
 run-name: Build release files 🚀
-on: [push]
+on: 
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '**.ps1'
+      
 jobs:
   build:
     name: Run build
