@@ -49,5 +49,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "users.exe, ad.exe"
-          tag: v1.0.0
+          tag: v1.0.1
           # bodyFile: "body.md"

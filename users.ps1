@@ -1,5 +1,5 @@
 # Define new admin user credentials
-$newUsername = "Admin"
+$newUsername = Read-Host -AsSecureString "Admin username"
 # Prompt for the new admin user password
 $newPassword = Read-Host -AsSecureString "Enter the password for the new admin user"
 
