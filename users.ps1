@@ -8,7 +8,7 @@ $plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.Int
 
 
 # Create the new user
-New-LocalUser -Name $newUsername -Password (ConvertTo-SecureString $plainPassword -AsPlainText -Force) -FullName "Admin" -Description "Administrator account for remote access"
+New-LocalUser -Name $newUsername -Password (ConvertTo-SecureString $plainPassword -AsPlainText -Force) -FullName $newUsername -Description "Your new Admin"
 
 # Add the new user to the Administrators group
 Add-LocalGroupMember -Group "Administrators" -Member $newUsername
