@@ -20,7 +20,7 @@ function Install-AnyDesk {
 
         # Install AnyDesk silently
         $installArgs = "--install `"$installDir`" --start-with-win --create-shortcuts --create-desktop-icon --silent"
-        Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait -ErrorAction Stop
+        Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait
     } catch {
         Write-Error "Failed to install AnyDesk: $_"
         exit 1
