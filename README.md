@@ -1,3 +1,5 @@
+Notice: you can always find the latest build of this script on [Releases page](https://github.com/after-gl/scripts/releases/)
+
 # Admin scripts
 
 ## ad.exe: 
