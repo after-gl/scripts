@@ -58,8 +58,17 @@ jobs:
       - name: Calculate next version
         id: version
         run: |
-          # Get the latest tag, or default to v0.0.0 if no tags exist
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          # Fetch all tags
+          git fetch --tags
+          
+          # Get all tags matching v* pattern, sort them, and get the latest
+          LATEST_TAG=$(git tag -l "v*" | sort -V | tail -n 1)
+          
+          # If no tags exist, default to v0.0.0
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v0.0.0"
+          fi
+          
           echo "Latest tag: $LATEST_TAG"
           
           # Remove 'v' prefix and split version into parts
@@ -72,6 +81,14 @@ jobs:
           # Construct new version
           NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
           echo "New version: $NEW_VERSION"
+          
+          # Verify the tag doesn't already exist
+          if git rev-parse "$NEW_VERSION" >/dev/null 2>&1; then
+            echo "Warning: Tag $NEW_VERSION already exists, incrementing again..."
+            PATCH=$((PATCH + 1))
+            NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+            echo "Adjusted new version: $NEW_VERSION"
+          fi
           
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: Download artifact
