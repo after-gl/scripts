@@ -1,5 +1,5 @@
 # Variables
-$downloadUrl = "https://example.com/wallpaper.jpg"
+$downloadUrl = "https://pbs.twimg.com/media/G2cP3lOWwAAd-87?format=jpg&name=4096x4096"
 $wallpaperPath = "$env:Temp\wallpaper.jpg"
 
 # Function to download wallpaper image
