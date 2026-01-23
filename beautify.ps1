@@ -56,13 +56,50 @@ function Set-DesktopBackground {
     }
 }
 
+# Function to set Windows theme to pink
+function Set-PinkTheme {
+    try {
+        Write-Output "Setting Windows theme to pink..."
+        
+        # Pink color in BGR format (Deep Pink: RGB(255, 20, 147) = BGR 0x9314FF)
+        $pinkColor = 0x9314FF
+        
+        # Ensure the Personalize registry path exists
+        $personalizePath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+        if (-not (Test-Path $personalizePath)) {
+            New-Item -Path $personalizePath -Force | Out-Null
+        }
+        
+        # Set accent color (Windows 10/11)
+        Set-ItemProperty -Path $personalizePath -Name "AccentColor" -Value $pinkColor -ErrorAction Stop
+        
+        # Enable color prevalence (use accent color in title bars and taskbar)
+        Set-ItemProperty -Path $personalizePath -Name "ColorPrevalence" -Value 1 -ErrorAction Stop
+        
+        # Set accent color in start menu and taskbar
+        Set-ItemProperty -Path $personalizePath -Name "EnableTransparency" -Value 0 -ErrorAction Stop
+        
+        Write-Output "Windows theme has been set to pink successfully."
+        return $true
+    }
+    catch {
+        Write-Error "Failed to set pink theme: $_"
+        return $false
+    }
+}
+
 # Main script logic
-Write-Output "Desktop Background Script"
-Write-Output "========================="
+Write-Output "Desktop Background and Theme Script"
+Write-Output "===================================="
 
 if (Download-Wallpaper) {
     if (Set-DesktopBackground -ImagePath $wallpaperPath) {
-        Write-Output "Script completed successfully."
+        if (Set-PinkTheme) {
+            Write-Output "Script completed successfully."
+        } else {
+            Write-Error "Failed to set pink theme."
+            exit 1
+        }
     } else {
         Write-Error "Failed to set desktop background."
         exit 1

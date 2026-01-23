@@ -43,13 +43,26 @@ Use this script at your own risk. The author is not responsible for any damage o
 - Administrator privileges.
 
 -----
-## beautify.exe: Desktop Background Script
-This PowerShell script automates the process of downloading a desktop background image from a hardcoded URL and setting it as the Windows desktop background. The script performs the following actions:
+## beautify.exe: Desktop Background and Theme Script
+This PowerShell script automates the process of downloading a desktop background image from a hardcoded URL, setting it as the Windows desktop background, and applying a pink theme. The script performs the following actions:
 1. Downloads the wallpaper image from a predefined URL to a temporary location.
 2. Sets the downloaded image as the desktop background.
 3. Configures the wallpaper style to fill the screen.
+4. Sets the Windows theme accent color to pink.
 
 ### Prerequisites
 - PowerShell 5.0 or later.
 - Administrator privileges.
 - Internet connection to download the wallpaper image.
+
+-----
+## revert.exe: Revert Beautify Changes Script
+This PowerShell script reverts all changes made by the beautify.exe script. The script performs the following actions:
+1. Restores the desktop background to Windows default.
+2. Removes the downloaded wallpaper file from the temporary location.
+3. Restores the Windows theme accent color to default settings.
+4. Resets theme transparency and color prevalence settings.
+
+### Prerequisites
+- PowerShell 5.0 or later.
+- Administrator privileges.

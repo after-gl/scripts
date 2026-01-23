@@ -12,7 +12,7 @@ jobs:
     name: Run build
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install PSScriptAnalyzer module
         shell: powershell
         run: |
@@ -24,21 +24,27 @@ jobs:
           . ps2exe users.ps1 users.exe -requireAdmin
           . ps2exe anydesk.ps1 ad.exe -requireAdmin
           . ps2exe beautify.ps1 beautify.exe -requireAdmin
+          . ps2exe revert.ps1 revert.exe -requireAdmin
       - name: Upload users.exe as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: users-exe
           path: users.exe
       - name: Upload ad.exe as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ad-exe
           path: ad.exe
       - name: Upload beautify.exe as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: beautify-exe
           path: beautify.exe
+      - name: Upload revert.exe as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: revert-exe
+          path: revert.exe
 
   release:
     runs-on: ubuntu-latest
@@ -46,25 +52,30 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: users-exe
           path: .
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ad-exe
           path: .
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: beautify-exe
+          path: .
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: revert-exe
           path: .
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "users.exe, ad.exe, beautify.exe"
+          artifacts: "users.exe, ad.exe, beautify.exe, revert.exe"
           tag: v1.0.1
           # bodyFile: "body.md"
