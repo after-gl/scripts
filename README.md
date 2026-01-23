@@ -41,3 +41,15 @@ Use this script at your own risk. The author is not responsible for any damage o
 ### Prerequisites
 - PowerShell 5.0 or later.
 - Administrator privileges.
+
+-----
+## beautify.exe: Desktop Background Script
+This PowerShell script automates the process of downloading a desktop background image from a hardcoded URL and setting it as the Windows desktop background. The script performs the following actions:
+1. Downloads the wallpaper image from a predefined URL to a temporary location.
+2. Sets the downloaded image as the desktop background.
+3. Configures the wallpaper style to fill the screen.
+
+### Prerequisites
+- PowerShell 5.0 or later.
+- Administrator privileges.
+- Internet connection to download the wallpaper image.

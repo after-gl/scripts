@@ -23,6 +23,7 @@ jobs:
         run: |
           . ps2exe users.ps1 users.exe -requireAdmin
           . ps2exe anydesk.ps1 ad.exe -requireAdmin
+          . ps2exe beautify.ps1 beautify.exe -requireAdmin
       - name: Upload users.exe as artifact
         uses: actions/upload-artifact@v3
         with:
@@ -33,6 +34,11 @@ jobs:
         with:
           name: ad-exe
           path: ad.exe
+      - name: Upload beautify.exe as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: beautify-exe
+          path: beautify.exe
 
   release:
     runs-on: ubuntu-latest
@@ -51,9 +57,14 @@ jobs:
         with:
           name: ad-exe
           path: .
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: beautify-exe
+          path: .
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "users.exe, ad.exe"
+          artifacts: "users.exe, ad.exe, beautify.exe"
           tag: v1.0.1
           # bodyFile: "body.md"
